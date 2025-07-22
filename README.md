@@ -29,4 +29,4 @@ Each of the following instructions was tested using directed assembly test cases
 | `beq`      | Branch if equal          | ✅     |
 | `jal`      | Jump and link            | ✅     |
 
-Waveform screenshots demonstrating each instruction’s behavior are included.
+Waveform screenshots demonstrating each instruction’s behavior are included. The 'readme' file briefly discusses about the instructions. 
