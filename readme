@@ -1,0 +1,39 @@
+RISCV validation (Waveform explanation)
+
+1.  lw x6, -4(x9)
+
+	If lw x6, -4(x9) is executed:
+		•	x9 = 100
+		•	Offset = -4 → Effective address = 96
+		•	data_mem[96 >> 2] = 0xDEADBEEF
+		•	Then: x6 should now be 0xDEADBEEF
+
+2.  sw x6, 8(x9)
+
+    x9 -> 0x15 stored, and x6 has 0x0f0f0f0f stored
+        0x15 + 0x8 = 0x1d
+        0x1d in datam_memory gets written with 0x0f0f0f0f
+
+3.  or x4, x5, x6
+
+    x5 -> 0xff00ff00, x6 -> 0x0f0f0f0f
+    x4 = 0xff00ff00 | 0x0f0f0f0f
+    x4 = 0xff0fff0f
+
+4.  beq x4, x4, -12
+
+    pc -> 0x4
+    pc in next clock cycle = pc - 12 = 4 - 12 = -8 (or FFFF_FFF8)
+
+5.  addi x4, x4, 4
+    x4 -> 21
+    x4 = 21 + 4
+    x4 = 25
+
+6.  jal x1, 16 (jal writes PC+4 to rd and changes PC to the jump target address, PC + imm.)
+    pc -> 0x4
+    x1 is written with 4 + 4 = 8
+    x1 -> 8
+    pc in next clock cycle -> 0x4 + 0x10 = 0x14 (jumps by 16 bytes)
+
+
